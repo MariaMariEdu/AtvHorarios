@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  pm2025-2-trabalho-final-mongo:
+    image: mongo:latest
+    container_name: pm2025-2-trabalho-final-mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: pm2025-2-mongo-admin
+      MONGO_INITDB_ROOT_PASSWORD: pm2025-2-mongo-secret
+      MONGO_INITDB_DATABASE: pm2025-2-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - pm2025-2-network
+
+  pm2025-2-trabalho-final-portainer:
+    image: portainer/portainer-ce:latest
+    container_name: pm2025-2-trabalho-final-portainer
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    networks:
+      - pm2025-2-network
+
+volumes:
+  mongo_data:
+  portainer_data:
+
+networks:
+  pm2025-2-network:
+    driver: bridge
