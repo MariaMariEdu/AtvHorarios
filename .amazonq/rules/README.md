@@ -1,0 +1,1 @@
+#1.)Atualizar o README.md com todas as funcionalizadas implementadas no workspace
