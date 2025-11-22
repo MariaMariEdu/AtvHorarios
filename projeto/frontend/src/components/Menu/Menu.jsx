@@ -15,9 +15,11 @@ import {
 } from '@mui/material';
 import {
   Business as BusinessIcon,
+  School as SchoolIcon,
   Close as CloseIcon,
 } from '@mui/icons-material';
 import Instituicoes from '../Instituicoes/Instituicoes';
+import Cursos from '../Cursos/Cursos';
 
 const Menu = ({ open, onClose }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -41,6 +43,14 @@ const Menu = ({ open, onClose }) => {
     handleOpenModal('Gerenciar Instituições', <Instituicoes />);
   };
 
+  /**
+   * Manipula o clique no menu de Cursos
+   * Abre o modal com o componente de gerenciamento de cursos
+   */
+  const handleCursosClick = () => {
+    handleOpenModal('Gerenciar Cursos', <Cursos />);
+  };
+
   return (
     <>
       <Drawer anchor="left" open={open} onClose={onClose}>
@@ -58,6 +68,14 @@ const Menu = ({ open, onClose }) => {
                   <BusinessIcon />
                 </ListItemIcon>
                 <ListItemText primary="Instituições" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton onClick={handleCursosClick}>
+                <ListItemIcon>
+                  <SchoolIcon />
+                </ListItemIcon>
+                <ListItemText primary="Cursos" />
               </ListItemButton>
             </ListItem>
           </List>

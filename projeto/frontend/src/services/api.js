@@ -48,4 +48,38 @@ export const instituicoesService = {
   remover: (id) => api.delete(`/instituicoes/${id}`),
 };
 
+/**
+ * Serviços para operações com cursos
+ */
+export const cursosService = {
+  /**
+   * Lista todos os cursos
+   * @param {Object} params - Parâmetros de consulta
+   * @returns {Promise} Promise com dados dos cursos
+   */
+  listar: (params = {}) => api.get('/cursos', { params }),
+
+  /**
+   * Cria um novo curso
+   * @param {Object} data - Dados do curso
+   * @returns {Promise} Promise com dados do curso criado
+   */
+  criar: (data) => api.post('/cursos', data),
+
+  /**
+   * Atualiza um curso
+   * @param {string} id - ID do curso
+   * @param {Object} data - Dados para atualização
+   * @returns {Promise} Promise com dados do curso atualizado
+   */
+  atualizar: (id, data) => api.put(`/cursos/${id}`, data),
+
+  /**
+   * Remove um curso
+   * @param {string} id - ID do curso
+   * @returns {Promise} Promise da operação
+   */
+  remover: (id) => api.delete(`/cursos/${id}`),
+};
+
 export default api;
