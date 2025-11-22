@@ -4,7 +4,7 @@ respostas: pt-br
 
 1.) o endpoint CRUD para instituições
 
-a) criar o server.js
+
 
 b) criar a rota e controlers para o endpoints: /api/v1/instituicoes
 
@@ -31,51 +31,14 @@ b.5) Convenções de resposta de erro (todas as rotas)
 JSON { message: string, details?: any }
 400 validação, 404 não encontrado, 409 conflito, 500 erro interno.
 
-c) criar o server.js
 
-c.1) suporte a https (colocar parametros https no .env)
-
-c.2) suporte ao cors
-
-c.3) criar .env do backend com as aseuintes informações:
-# Mongo
-MONGO_INITDB_HOST=localhost
-MONGO_INITDB_PORT=27017
-MONGO_INITDB_ROOT_USERNAME=pm2025-2-mongo-admin
-MONGO_INITDB_ROOT_PASSWORD=pm2025-2-mongo-secret
-MONGO_INITDB_DATABASE=pm2025-2-mongodb
-
-# HTTPS
-HTTPS_ENABLED=true
-SSL_KEY_PATH=./certs/key.pem
-SSL_CERT_PATH=./certs/cert.pem
-
-# App
-PORT=3000
-CORS_ORIGIN=*
-NODE_ENV=development
-
-c.4) executar cliente mongo com parametros obtidos via .env
-
-c.5) Estrutura
-server.js deve:
-Carregar .env via configurationLoader.js.
-Conectar ao MongoDB com database.js usando credenciais do .env.
-Habilitar CORS com origem de CORS_ORIGIN.
-Registrar JSON parser, morgan (logger), helmet.
-Montar rotas de /api/v1/instituicoes.
-Montar Swagger UI em /api-docs via swagger.js.
-Registrar errorHandler.js como middleware final.
-Subir HTTPS se HTTPS_ENABLED=true usando httpsConfig.js; caso contrário, HTTP.
 
 2.) Definir suporte ao Swagger
 
 3.) Criar a documentação swagger e JSDoc
 
 4)Critérios de aceite
-Iniciar banco com string de conexão construída de .env:
-mongodb://<user>:<password>@<host>:<port>/<database>?authSource=admin
-Com HTTPS_ENABLED=true e certificados válidos no caminho, servidor expõe https://localhost:PORT.
+
 GET /api/v1/instituicoes retorna array JSON (vazio se não houver registros).
 POST com CNPJ repetido retorna 409 e mensagem clara em pt-BR.
 PUT/DELETE com id inexistente retornam 404.

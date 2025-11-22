@@ -27,6 +27,8 @@ const InstituicoesScreen = () => {
   const [filtro, setFiltro] = useState('');
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [confirmDialogVisible, setConfirmDialogVisible] = useState(false);
+  const [instituicaoParaRemover, setInstituicaoParaRemover] = useState(null);
   
   const [formData, setFormData] = useState({
     nome: '',
@@ -103,27 +105,38 @@ const InstituicoesScreen = () => {
   };
 
   const removerInstituicao = (id) => {
-    Alert.alert(
-      'Confirmar Remoção',
-      'Tem certeza que deseja remover esta instituição?',
-      [
-        { text: 'Cancelar', style: 'cancel' },
-        {
-          text: 'Remover',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              await instituicoesService.remover(id);
-              mostrarSnackbar('Instituição removida com sucesso');
-              carregarInstituicoes();
-            } catch (error) {
-              const message = error.response?.data?.message || 'Erro ao remover instituição';
-              mostrarSnackbar(message);
-            }
-          },
-        },
-      ]
-    );
+    console.log('Tentando remover instituição com ID:', id);
+    setInstituicaoParaRemover(id);
+    setConfirmDialogVisible(true);
+  };
+
+  const confirmarRemocao = () => {
+    if (instituicaoParaRemover) {
+      console.log('Confirmou remoção da instituição:', instituicaoParaRemover);
+      executarRemocaoInstituicao(instituicaoParaRemover);
+    }
+    setConfirmDialogVisible(false);
+    setInstituicaoParaRemover(null);
+  };
+
+  const cancelarRemocao = () => {
+    console.log('Cancelou remoção');
+    setConfirmDialogVisible(false);
+    setInstituicaoParaRemover(null);
+  };
+
+  const executarRemocaoInstituicao = async (id) => {
+    try {
+      console.log('Executando remoção da instituição:', id);
+      await instituicoesService.remover(id);
+      console.log('Instituição removida com sucesso');
+      mostrarSnackbar('Instituição removida com sucesso');
+      carregarInstituicoes();
+    } catch (error) {
+      console.error('Erro ao remover instituição:', error);
+      const message = error.response?.data?.message || 'Erro ao remover instituição';
+      mostrarSnackbar(message);
+    }
   };
 
   const instituicoesFiltradas = instituicoes.filter((instituicao) =>
@@ -174,13 +187,14 @@ const InstituicoesScreen = () => {
                 <View style={{ flexDirection: 'row' }}>
                   <IconButton
                     icon="pencil"
-                    mode="contained"
+                    iconColor="#1976d2"
+                    size={24}
                     onPress={() => abrirDialog(instituicao)}
                   />
                   <IconButton
                     icon="delete"
-                    mode="contained"
                     iconColor="#d32f2f"
+                    size={24}
                     onPress={() => removerInstituicao(instituicao._id)}
                   />
                 </View>
@@ -202,6 +216,19 @@ const InstituicoesScreen = () => {
       />
 
       <Portal>
+        <Dialog visible={confirmDialogVisible} onDismiss={cancelarRemocao}>
+          <Dialog.Title>Confirmar Remoção</Dialog.Title>
+          <Dialog.Content>
+            <Text>Tem certeza que deseja remover esta instituição?</Text>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={cancelarRemocao}>Cancelar</Button>
+            <Button onPress={confirmarRemocao} mode="contained" buttonColor="#d32f2f">
+              Remover
+            </Button>
+          </Dialog.Actions>
+        </Dialog>
+
         <Dialog visible={dialogVisible} onDismiss={fecharDialog}>
           <Dialog.Title>
             {editingId ? 'Editar Instituição' : 'Nova Instituição'}

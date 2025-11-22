@@ -4,7 +4,9 @@
  */
 
 const Instituicao = require('./Instituicao');
+const Curso = require('./Curso');
 
 module.exports = {
-  Instituicao
+  Instituicao,
+  Curso
 };
