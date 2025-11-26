@@ -19,6 +19,12 @@ mongoose.connect(MONGODB_URI)
   .then(() => console.log('Conectado ao MongoDB'))
   .catch(err => console.error('Erro ao conectar ao MongoDB:', err));
 
+// Rotas
+const instituicoesRoutes = require('./routes/instituicoes');
+const cursosRoutes = require('./routes/cursos');
+app.use('/api/v1/instituicoes', instituicoesRoutes);
+app.use('/api/v1/cursos', cursosRoutes);
+
 // Rota de teste
 app.get('/', (req, res) => {
   res.json({ message: 'Backend PM2025-2 funcionando!' });

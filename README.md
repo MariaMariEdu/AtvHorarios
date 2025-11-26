@@ -93,48 +93,93 @@ npm start
 ✅ **Estrutura de Projeto**
 - Organização em pastas (backend, frontend, mobile)
 - Separação de infraestrutura
+- Configuração de ambiente com .env
+- Estrutura modular (controllers, models, routes, config)
 
 ✅ **Infraestrutura Docker**
-- Serviço MongoDB configurado
-- Serviço Portainer para gerenciamento
-- Network dedicada para comunicação
-- Volumes persistentes para dados
+- Serviço MongoDB 7 com autenticação
+- Serviço Portainer para gerenciamento de containers
+- Network dedicada (pm2025-2-network) para comunicação
+- Volumes persistentes para dados (mongo_data, portainer_data)
+- Health checks configurados
+- Restart automático dos serviços
 
-✅ **Backend - API REST**
+✅ **Backend - API REST (Node.js + Express + MongoDB)**
 - Projeto Node.js com Express e Mongoose
-- Modelo de dados para Instituições
+- Modelo de dados para Instituições com validações
 - CRUD completo para instituições (/api/v1/instituicoes)
-- Validação de dados e tratamento de erros
+- Validação de dados (CNPJ único, email válido, campos obrigatórios)
+- Tratamento de erros centralizado
 - Suporte a HTTPS configurável
-- Documentação Swagger em /api-docs
-- Middleware de segurança (Helmet, CORS)
-- Logging com Morgan
-- Paginação e filtros nas consultas
+- Documentação Swagger completa em /api-docs
+- Middleware de segurança (Helmet, CORS, Morgan)
+- Paginação e filtros nas consultas (ativo, nome, page, limit)
+- Conexão MongoDB com autenticação
+- Configuração flexível via variáveis de ambiente
 
-✅ **Frontend Web - React**
-- Projeto React com Vite e Material-UI
+✅ **Frontend Web - React + Vite + Material-UI**
+- Projeto React 19 com Vite como bundler
 - Layout responsivo com cabeçalho, área de trabalho e rodapé
 - Menu lateral (drawer) com navegação
 - Componente de Instituições com CRUD completo
-- Grid de dados com ordenação e filtros
-- Modais para edição e criação
-- Integração com API do backend
+- Tabela de dados com ordenação e filtros
+- Modais para criação e edição de instituições
+- Integração com API do backend via Axios
 - Design responsivo para mobile e desktop
+- Notificações de feedback (Snackbar)
+- Formulários com validação
+- Estados de loading e tratamento de erros
 
-✅ **Mobile App - React Native**
-- Projeto React Native com Expo
+✅ **Mobile App - React Native + Expo**
+- Projeto React Native 0.81 com Expo 54
 - Interface Material Design com React Native Paper
 - CRUD completo de Instituições idêntico ao web
-- Cards responsivos para listagem
+- Cards responsivos para listagem de instituições
 - Formulários modais para criação/edição
-- Filtros em tempo real
-- Navegação com React Navigation
+- Filtros em tempo real por nome
+- Navegação com React Navigation (Stack Navigator)
 - Integração com mesma API do backend
 - Mensagens de feedback em português
 - Confirmações nativas para exclusões
+- Ícones vetoriais com React Native Vector Icons
+- Gerenciamento de estado local
 
-✅ **Documentação**
-- README.md atualizado
-- Documentos de requisitos e horários
-- JSDoc em todo o código
-- Documentação Swagger da API
+✅ **Modelo de Dados - Instituições**
+- Schema Mongoose com validações
+- Campos: nome, cnpj, email, telefone, endereco, ativo
+- Validação de email com regex
+- CNPJ único no banco
+- Timestamps automáticos (createdAt, updatedAt)
+- Índices para performance
+
+✅ **Configurações e Segurança**
+- Configuração de HTTPS opcional
+- Helmet para headers de segurança
+- CORS configurado para desenvolvimento
+- Morgan para logging de requisições
+- Validação de entrada de dados
+- Tratamento de erros padronizado
+- Variáveis de ambiente para configuração
+
+✅ **Documentação e Qualidade**
+- README.md completo e atualizado
+- Documentos de requisitos e horários dos laboratórios
+- JSDoc em todo o código backend
+- Documentação Swagger da API com exemplos
+- Comentários em português
+- Estrutura de projeto documentada
+- Status do projeto (PROJETO_STATUS.md)
+
+✅ **Scripts e Automação**
+- Scripts npm para desenvolvimento (dev) e produção (start)
+- Nodemon para reload automático no desenvolvimento
+- Build otimizado para produção (Vite)
+- Linting configurado (ESLint)
+- Expo CLI para desenvolvimento mobile
+
+✅ **Dependências e Tecnologias**
+- **Backend**: Express, Mongoose, Swagger, Helmet, CORS, Morgan, Dotenv
+- **Frontend**: React 19, Material-UI, Axios, React Router DOM, Vite
+- **Mobile**: React Native, Expo, React Navigation, React Native Paper, Axios
+- **Infraestrutura**: Docker, MongoDB 7, Portainer
+- **Desenvolvimento**: Nodemon, ESLint, Vite
