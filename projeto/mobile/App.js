@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import InstituicoesScreen from './src/components/Instituicoes/InstituicoesScreen';
+import ProfessoresScreen from './src/components/Professores/ProfessoresScreen';
 import CursosScreen from './src/components/Cursos/CursosScreen';
 
 const Tab = createBottomTabNavigator();
@@ -27,6 +28,16 @@ export default function App() {
               title: 'Instituições',
               tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons name="office-building" size={size} color={color} />
+              ),
+            }}
+          />
+          <Tab.Screen 
+            name="Professores" 
+            component={ProfessoresScreen}
+            options={{
+              title: 'Professores',
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="account-tie" size={size} color={color} />
               ),
             }}
           />

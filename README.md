@@ -83,6 +83,12 @@ npm start
 - `PUT /api/v1/instituicoes/:id` - Atualizar instituição
 - `DELETE /api/v1/instituicoes/:id` - Remover instituição
 
+### Professores
+- `POST /api/v1/professores` - Criar professor
+- `GET /api/v1/professores` - Listar professores (com filtros)
+- `PUT /api/v1/professores/:id` - Atualizar professor
+- `DELETE /api/v1/professores/:id` - Remover professor
+
 #### Parâmetros de Consulta
 - `?ativo=true|false` - Filtrar por status
 - `?nome=texto` - Filtrar por nome (contém)
@@ -122,33 +128,43 @@ npm start
 - Layout responsivo com cabeçalho, área de trabalho e rodapé
 - Menu lateral (drawer) com navegação
 - Componente de Instituições com CRUD completo
-- Tabela de dados com ordenação e filtros
-- Modais para criação e edição de instituições
+- Componente de Professores com CRUD completo
+- Tabelas de dados com ordenação e filtros
+- Modais para criação e edição de registros
 - Integração com API do backend via Axios
 - Design responsivo para mobile e desktop
 - Notificações de feedback (Snackbar)
 - Formulários com validação
 - Estados de loading e tratamento de erros
+- Ordenação por colunas (TableSortLabel)
+- Filtros em tempo real por texto
 
 ✅ **Mobile App - React Native + Expo**
 - Projeto React Native 0.81 com Expo 54
 - Interface Material Design com React Native Paper
 - CRUD completo de Instituições idêntico ao web
-- Cards responsivos para listagem de instituições
+- CRUD completo de Professores com interface mobile otimizada
+- Cards responsivos para listagem de registros
 - Formulários modais para criação/edição
-- Filtros em tempo real por nome
-- Navegação com React Navigation (Stack Navigator)
+- Filtros em tempo real por nome e outros campos
+- Navegação com React Navigation (Bottom Tab Navigator)
 - Integração com mesma API do backend
 - Mensagens de feedback em português
 - Confirmações nativas para exclusões
 - Ícones vetoriais com React Native Vector Icons
 - Gerenciamento de estado local
+- Abas para navegação entre Instituições, Professores e Cursos
 
-✅ **Modelo de Dados - Instituições**
-- Schema Mongoose com validações
-- Campos: nome, cnpj, email, telefone, endereco, ativo
-- Validação de email com regex
-- CNPJ único no banco
+✅ **Modelo de Dados**
+- **Instituições**: Schema Mongoose com validações
+  - Campos: nome, cnpj, email, telefone, endereco, ativo
+  - Validação de email com regex
+  - CNPJ único no banco
+- **Professores**: Schema Mongoose com validações
+  - Campos: nome, email, telefone, especialidade, ativo
+  - Validação de email com regex
+  - Email único no banco
+  - CRUD completo implementado no mobile
 - Timestamps automáticos (createdAt, updatedAt)
 - Índices para performance
 
