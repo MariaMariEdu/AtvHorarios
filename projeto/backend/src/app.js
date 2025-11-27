@@ -22,8 +22,10 @@ mongoose.connect(MONGODB_URI)
 // Rotas
 const instituicoesRoutes = require('./routes/instituicoes');
 const cursosRoutes = require('./routes/cursos');
+const professorRoutes = require('./routes/professorRoutes');
 app.use('/api/v1/instituicoes', instituicoesRoutes);
 app.use('/api/v1/cursos', cursosRoutes);
+app.use('/api/v1/professores', professorRoutes);
 
 // Rota de teste
 app.get('/', (req, res) => {
