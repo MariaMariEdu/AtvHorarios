@@ -12,7 +12,7 @@ services:
       MONGO_INITDB_DATABASE: pm2025-2-mongodb
       MONGO_AUTH_SOURCE: admin
     ports:
-      - "27017:27017"
+      - ${MONGO_INITDB_PORT:-27017}:27017 
     volumes:
       - mongo_data:/data/db
       # Opcional: crie um user de aplicação automaticamente
