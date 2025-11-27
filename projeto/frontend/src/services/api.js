@@ -82,4 +82,38 @@ export const cursosService = {
   remover: (id) => api.delete(`/cursos/${id}`),
 };
 
+/**
+ * Serviços para operações com professores
+ */
+export const professoresService = {
+  /**
+   * Lista todos os professores
+   * @param {Object} params - Parâmetros de consulta
+   * @returns {Promise} Promise com dados dos professores
+   */
+  listar: (params = {}) => api.get('/professores', { params }),
+
+  /**
+   * Cria um novo professor
+   * @param {Object} data - Dados do professor
+   * @returns {Promise} Promise com dados do professor criado
+   */
+  criar: (data) => api.post('/professores', data),
+
+  /**
+   * Atualiza um professor
+   * @param {string} id - ID do professor
+   * @param {Object} data - Dados para atualização
+   * @returns {Promise} Promise com dados do professor atualizado
+   */
+  atualizar: (id, data) => api.put(`/professores/${id}`, data),
+
+  /**
+   * Remove um professor
+   * @param {string} id - ID do professor
+   * @returns {Promise} Promise da operação
+   */
+  remover: (id) => api.delete(`/professores/${id}`),
+};
+
 export default api;

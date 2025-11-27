@@ -1,4 +1,4 @@
-@frontend
+@projeto @frontend
 
 1.) criar na pasta frontend proejto react js (vite, mui, router)
 2.) criar o componente src/component/Menu/Menu.jsx

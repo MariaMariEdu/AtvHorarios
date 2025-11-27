@@ -5,6 +5,7 @@ Aplicação mobile React Native com Expo para gerenciamento de instituições.
 ## Funcionalidades
 
 - ✅ CRUD completo de Instituições
+- ✅ CRUD completo de Professores
 - ✅ Interface responsiva com React Native Paper
 - ✅ Navegação com React Navigation
 - ✅ Integração com API backend
@@ -51,8 +52,12 @@ npm run web
 ```
 src/
 ├── components/
-│   └── Instituicoes/
-│       └── InstituicoesScreen.js
+│   ├── Instituicoes/
+│   │   └── InstituicoesScreen.js
+│   ├── Professores/
+│   │   └── ProfessoresScreen.js
+│   └── Cursos/
+│       └── CursosScreen.js
 └── services/
     └── api.js
 ```
@@ -66,19 +71,29 @@ src/
 - **Excluir**: Confirmação antes da remoção
 - **Filtrar**: Busca em tempo real por qualquer campo
 
+### CRUD de Professores
+- **Listar**: Cards responsivos com dados do professor
+- **Criar**: Formulário com campos nome, email, telefone e especialidade
+- **Editar**: Edição com dados pré-preenchidos
+- **Excluir**: Confirmação nativa antes da remoção
+- **Filtrar**: Busca em tempo real por nome, email ou especialidade
+- **Status**: Controle de ativo/inativo com switch
+
 ### Interface
 - Design Material seguindo padrões do React Native Paper
 - Cards responsivos para listagem
-- FAB (Floating Action Button) para nova instituição
+- FAB (Floating Action Button) para novos registros
 - Dialogs modais para formulários
 - Snackbars para feedback
 - Searchbar para filtros
+- Navegação por abas (Bottom Tab Navigator)
 
 ### Integração com API
-- Mesmos endpoints do frontend web
+- Endpoints `/api/v1/instituicoes` e `/api/v1/professores`
 - Tratamento de erros com mensagens em português
 - Suporte aos critérios de aceite:
   - GET retorna array JSON
-  - POST com CNPJ repetido retorna 409
+  - POST com email repetido retorna 409 (Professores)
+  - POST com CNPJ repetido retorna 409 (Instituições)
   - PUT/DELETE com ID inexistente retornam 404
   - Mensagens em pt-BR
