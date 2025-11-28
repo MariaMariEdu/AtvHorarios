@@ -89,6 +89,22 @@ npm start
 - `PUT /api/v1/professores/:id` - Atualizar professor
 - `DELETE /api/v1/professores/:id` - Remover professor
 
+### Disciplinas
+- `POST /api/v1/disciplinas` - Criar disciplina
+- `GET /api/v1/disciplinas` - Listar disciplinas (com filtros)
+- `GET /api/v1/disciplinas/:id` - Buscar disciplina por ID
+- `PUT /api/v1/disciplinas/:id` - Atualizar disciplina
+- `DELETE /api/v1/disciplinas/:id` - Remover disciplina
+
+#### Parâmetros Específicos de Disciplinas
+- `?status=true|false|Ativa|Inativa` - Filtrar por status
+- `?codigo=texto` - Filtrar por código (contém)
+- `?page=1&limit=20` - Paginação
+
+#### Respostas de Erro Específicas
+- `409 Conflict` - Código de disciplina já existe
+- `404 Not Found` - Disciplina não encontrada (PUT/DELETE)
+
 #### Parâmetros de Consulta
 - `?ativo=true|false` - Filtrar por status
 - `?nome=texto` - Filtrar por nome (contém)
@@ -129,6 +145,7 @@ npm start
 - Menu lateral (drawer) com navegação
 - Componente de Instituições com CRUD completo
 - Componente de Professores com CRUD completo
+- Componente de Disciplinas com CRUD completo
 - Tabelas de dados com ordenação e filtros
 - Modais para criação e edição de registros
 - Integração com API do backend via Axios
@@ -144,8 +161,9 @@ npm start
 - Interface Material Design com React Native Paper
 - CRUD completo de Instituições idêntico ao web
 - CRUD completo de Professores com interface mobile otimizada
+- CRUD completo de Disciplinas com interface mobile otimizada
 - Cards responsivos para listagem de registros
-- Formulários modais para criação/edição
+- Formulários modais para criação/edição com menus dropdown
 - Filtros em tempo real por nome e outros campos
 - Navegação com React Navigation (Bottom Tab Navigator)
 - Integração com mesma API do backend
@@ -153,7 +171,10 @@ npm start
 - Confirmações nativas para exclusões
 - Ícones vetoriais com React Native Vector Icons
 - Gerenciamento de estado local
-- Abas para navegação entre Instituições, Professores e Cursos
+- Abas para navegação entre Instituições, Professores, Cursos e Disciplinas
+- Seleção de cursos e professores via menus interativos
+- Validação de código único com tratamento de erro 409
+- Tratamento específico de erros 404 para operações PUT/DELETE
 
 ✅ **Modelo de Dados**
 - **Instituições**: Schema Mongoose com validações
@@ -165,6 +186,16 @@ npm start
   - Validação de email com regex
   - Email único no banco
   - CRUD completo implementado no mobile
+- **Disciplinas**: Schema Mongoose com validações
+  - Campos: nome, codigo, cargaHoraria, curso (opcional), professorResponsavel (opcional), status (boolean)
+  - Código único no banco com validação
+  - Referências opcionais para Curso e Professor
+  - CRUD completo implementado no frontend e mobile
+  - Interface mobile com menus dropdown para seleção
+  - Tratamento de conflitos (código duplicado) com status 409
+  - Validação de operações com IDs inexistentes (status 404)
+  - População automática de dados de curso e professor
+  - Filtros avançados por status, nome e código
 - Timestamps automáticos (createdAt, updatedAt)
 - Índices para performance
 

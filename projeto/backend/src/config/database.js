@@ -12,9 +12,9 @@ const config = require('./configurationLoader');
  */
 const connectDatabase = async () => {
   try {
-    const { host, port, database } = config.mongo;
+    const { host, port, database, username, password } = config.mongo;
     // Para desenvolvimento local, usar conexão simples sem autenticação
-    const connectionString = `mongodb://${host}:${port}/${database}`;
+    const connectionString = `mongodb://${username}:${password}@${host}:${port}/${database}?authSource=admin`;
     
     await mongoose.connect(connectionString);
     console.log('Conectado ao MongoDB com sucesso:', connectionString);

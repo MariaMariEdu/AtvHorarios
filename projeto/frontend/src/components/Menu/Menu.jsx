@@ -17,11 +17,13 @@ import {
   Business as BusinessIcon,
   School as SchoolIcon,
   Person as PersonIcon,
+  MenuBook as MenuBookIcon,
   Close as CloseIcon,
 } from '@mui/icons-material';
 import Instituicoes from '../Instituicoes/Instituicoes';
 import Cursos from '../Cursos/Cursos';
 import Professores from '../Professores/Professores';
+import Disciplinas from '../Disciplinas/Disciplinas';
 
 const Menu = ({ open, onClose }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -61,6 +63,14 @@ const Menu = ({ open, onClose }) => {
     handleOpenModal('Gerenciar Professores', <Professores />);
   };
 
+  /**
+   * Manipula o clique no menu de Disciplinas
+   * Abre o modal com o componente de gerenciamento de disciplinas
+   */
+  const handleDisciplinasClick = () => {
+    handleOpenModal('Gerenciar Disciplinas', <Disciplinas />);
+  };
+
   return (
     <>
       <Drawer anchor="left" open={open} onClose={onClose}>
@@ -94,6 +104,14 @@ const Menu = ({ open, onClose }) => {
                   <PersonIcon />
                 </ListItemIcon>
                 <ListItemText primary="Professores" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton onClick={handleDisciplinasClick}>
+                <ListItemIcon>
+                  <MenuBookIcon />
+                </ListItemIcon>
+                <ListItemText primary="Disciplinas" />
               </ListItemButton>
             </ListItem>
           </List>

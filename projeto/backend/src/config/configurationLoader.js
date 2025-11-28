@@ -8,10 +8,10 @@ require('dotenv').config();
 const config = {
   mongo: {
     host: process.env.MONGO_INITDB_HOST || 'localhost',
-    port: process.env.MONGO_INITDB_PORT || '27017',
-    username: process.env.MONGO_INITDB_ROOT_USERNAME || 'admin',
-    password: process.env.MONGO_INITDB_ROOT_PASSWORD || 'password',
-    database: process.env.MONGO_INITDB_DATABASE || 'test'
+    port: process.env.MONGO_INITDB_PORT || '27018',
+    username: process.env.MONGO_INITDB_ROOT_USERNAME || 'pm2025-2-mongo-admin',
+    password: process.env.MONGO_INITDB_ROOT_PASSWORD || 'pm2025-2-mongo-secret',
+    database: process.env.MONGO_INITDB_DATABASE || 'pm2025-2-mongodb'
   },
   https: {
     enabled: process.env.HTTPS_ENABLED === 'true',

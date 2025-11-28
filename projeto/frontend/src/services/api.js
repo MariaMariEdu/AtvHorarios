@@ -116,4 +116,38 @@ export const professoresService = {
   remover: (id) => api.delete(`/professores/${id}`),
 };
 
+/**
+ * Serviços para operações com disciplinas
+ */
+export const disciplinasService = {
+  /**
+   * Lista todas as disciplinas
+   * @param {Object} params - Parâmetros de consulta
+   * @returns {Promise} Promise com dados das disciplinas
+   */
+  listar: (params = {}) => api.get('/disciplinas', { params }),
+
+  /**
+   * Cria uma nova disciplina
+   * @param {Object} data - Dados da disciplina
+   * @returns {Promise} Promise com dados da disciplina criada
+   */
+  criar: (data) => api.post('/disciplinas', data),
+
+  /**
+   * Atualiza uma disciplina
+   * @param {string} id - ID da disciplina
+   * @param {Object} data - Dados para atualização
+   * @returns {Promise} Promise com dados da disciplina atualizada
+   */
+  atualizar: (id, data) => api.put(`/disciplinas/${id}`, data),
+
+  /**
+   * Remove uma disciplina
+   * @param {string} id - ID da disciplina
+   * @returns {Promise} Promise da operação
+   */
+  remover: (id) => api.delete(`/disciplinas/${id}`),
+};
+
 export default api;

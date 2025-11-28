@@ -7,6 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import InstituicoesScreen from './src/components/Instituicoes/InstituicoesScreen';
 import ProfessoresScreen from './src/components/Professores/ProfessoresScreen';
 import CursosScreen from './src/components/Cursos/CursosScreen';
+import DisciplinasScreen from './src/components/Disciplinas/DisciplinasScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -48,6 +49,16 @@ export default function App() {
               title: 'Cursos',
               tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons name="school" size={size} color={color} />
+              ),
+            }}
+          />
+          <Tab.Screen 
+            name="Disciplinas" 
+            component={DisciplinasScreen}
+            options={{
+              title: 'Disciplinas',
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="book-open-variant" size={size} color={color} />
               ),
             }}
           />
