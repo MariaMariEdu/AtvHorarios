@@ -18,12 +18,14 @@ import {
   School as SchoolIcon,
   Person as PersonIcon,
   MenuBook as MenuBookIcon,
+  Science as ScienceIcon,
   Close as CloseIcon,
 } from '@mui/icons-material';
 import Instituicoes from '../Instituicoes/Instituicoes';
 import Cursos from '../Cursos/Cursos';
 import Professores from '../Professores/Professores';
 import Disciplinas from '../Disciplinas/Disciplinas';
+import Laboratorios from '../Laboratorios/Laboratorios';
 
 const Menu = ({ open, onClose }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -71,6 +73,14 @@ const Menu = ({ open, onClose }) => {
     handleOpenModal('Gerenciar Disciplinas', <Disciplinas />);
   };
 
+  /**
+   * Manipula o clique no menu de Laboratórios
+   * Abre o modal com o componente de gerenciamento de laboratórios
+   */
+  const handleLaboratoriosClick = () => {
+    handleOpenModal('Gerenciar Laboratórios', <Laboratorios />);
+  };
+
   return (
     <>
       <Drawer anchor="left" open={open} onClose={onClose}>
@@ -112,6 +122,14 @@ const Menu = ({ open, onClose }) => {
                   <MenuBookIcon />
                 </ListItemIcon>
                 <ListItemText primary="Disciplinas" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton onClick={handleLaboratoriosClick}>
+                <ListItemIcon>
+                  <ScienceIcon />
+                </ListItemIcon>
+                <ListItemText primary="Laboratórios" />
               </ListItemButton>
             </ListItem>
           </List>

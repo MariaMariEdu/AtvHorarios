@@ -150,4 +150,38 @@ export const disciplinasService = {
   remover: (id) => api.delete(`/disciplinas/${id}`),
 };
 
+/**
+ * Serviços para operações com laboratórios
+ */
+export const laboratoriosService = {
+  /**
+   * Lista todos os laboratórios
+   * @param {Object} params - Parâmetros de consulta
+   * @returns {Promise} Promise com dados dos laboratórios
+   */
+  listar: (params = {}) => api.get('/laboratorios', { params }),
+
+  /**
+   * Cria um novo laboratório
+   * @param {Object} data - Dados do laboratório
+   * @returns {Promise} Promise com dados do laboratório criado
+   */
+  criar: (data) => api.post('/laboratorios', data),
+
+  /**
+   * Atualiza um laboratório
+   * @param {string} id - ID do laboratório
+   * @param {Object} data - Dados para atualização
+   * @returns {Promise} Promise com dados do laboratório atualizado
+   */
+  atualizar: (id, data) => api.put(`/laboratorios/${id}`, data),
+
+  /**
+   * Remove um laboratório
+   * @param {string} id - ID do laboratório
+   * @returns {Promise} Promise da operação
+   */
+  remover: (id) => api.delete(`/laboratorios/${id}`),
+};
+
 export default api;

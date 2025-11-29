@@ -82,7 +82,6 @@ const professorSchema = new mongoose.Schema({
 /**
  * Índices para otimização de consultas
  */
-professorSchema.index({ email: 1 });
 professorSchema.index({ nome: 1 });
 professorSchema.index({ status: 1 });
 

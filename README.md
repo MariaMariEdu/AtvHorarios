@@ -105,6 +105,25 @@ npm start
 - `409 Conflict` - Código de disciplina já existe
 - `404 Not Found` - Disciplina não encontrada (PUT/DELETE)
 
+### Laboratórios
+- `POST /api/v1/laboratorios` - Criar laboratório
+- `GET /api/v1/laboratorios` - Listar laboratórios (com filtros)
+- `GET /api/v1/laboratorios/:id` - Buscar laboratório por ID
+- `PUT /api/v1/laboratorios/:id` - Atualizar laboratório
+- `DELETE /api/v1/laboratorios/:id` - Remover laboratório
+
+#### Parâmetros Específicos de Laboratórios
+- `?status=true|false|Ativo|Inativo` - Filtrar por status
+- `?nome=texto` - Filtrar por nome (contém)
+- `?localizacao=texto` - Filtrar por localização (contém)
+- `?capacidadeMin=numero` - Filtrar por capacidade mínima
+- `?capacidadeMax=numero` - Filtrar por capacidade máxima
+- `?page=1&limit=20` - Paginação
+
+#### Respostas de Erro Específicas
+- `409 Conflict` - Código do laboratório já existe
+- `404 Not Found` - Laboratório não encontrado (PUT/DELETE)
+
 #### Parâmetros de Consulta
 - `?ativo=true|false` - Filtrar por status
 - `?nome=texto` - Filtrar por nome (contém)
@@ -162,6 +181,7 @@ npm start
 - CRUD completo de Instituições idêntico ao web
 - CRUD completo de Professores com interface mobile otimizada
 - CRUD completo de Disciplinas com interface mobile otimizada
+- CRUD completo de Laboratórios com interface mobile otimizada
 - Cards responsivos para listagem de registros
 - Formulários modais para criação/edição com menus dropdown
 - Filtros em tempo real por nome e outros campos
@@ -171,7 +191,7 @@ npm start
 - Confirmações nativas para exclusões
 - Ícones vetoriais com React Native Vector Icons
 - Gerenciamento de estado local
-- Abas para navegação entre Instituições, Professores, Cursos e Disciplinas
+- Abas para navegação entre Instituições, Professores, Cursos, Disciplinas e Laboratórios
 - Seleção de cursos e professores via menus interativos
 - Validação de código único com tratamento de erro 409
 - Tratamento específico de erros 404 para operações PUT/DELETE
@@ -196,6 +216,15 @@ npm start
   - Validação de operações com IDs inexistentes (status 404)
   - População automática de dados de curso e professor
   - Filtros avançados por status, nome e código
+- **Laboratórios**: Schema Mongoose com validações
+  - Campos: nome, codigo, descricao, capacidade, localizacao, equipamentos, status
+  - Código único no banco com validação
+  - Capacidade numérica com limites (1-200)
+  - CRUD completo implementado no mobile
+  - Interface mobile otimizada com cards responsivos
+  - Tratamento de conflitos (código duplicado) com status 409
+  - Validação de operações com IDs inexistentes (status 404)
+  - Filtros por nome, localização, capacidade e status
 - Timestamps automáticos (createdAt, updatedAt)
 - Índices para performance
 

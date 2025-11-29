@@ -110,7 +110,6 @@ const disciplinaSchema = new mongoose.Schema({
  */
 disciplinaSchema.index({ curso: 1 });
 disciplinaSchema.index({ nome: 1 });
-disciplinaSchema.index({ codigo: 1 });
 disciplinaSchema.index({ professorResponsavel: 1 });
 disciplinaSchema.index({ status: 1 });
 

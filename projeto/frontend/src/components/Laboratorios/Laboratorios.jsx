@@ -27,17 +27,16 @@ import {
   Edit as EditIcon,
   Delete as DeleteIcon,
   Search as SearchIcon,
-  Person as PersonIcon,
 } from '@mui/icons-material';
-import { professoresService } from '../../services/api';
+import { laboratoriosService } from '../../services/api';
 
 /**
- * Componente para gerenciamento de professores
- * Implementa CRUD completo com filtros e ordenação
+ * Componente para gerenciamento de laboratórios
+ * Implementa CRUD completo com ordenação e filtros
  * @component
  */
-const Professores = () => {
-  const [professores, setProfessores] = useState([]);
+const Laboratorios = () => {
+  const [laboratorios, setLaboratorios] = useState([]);
   const [loading, setLoading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingId, setEditingId] = useState(null);
@@ -48,22 +47,25 @@ const Professores = () => {
   
   const [formData, setFormData] = useState({
     nome: '',
-    email: '',
-    telefone: '',
+    codigo: '',
+    capacidade: '',
+    descricao: '',
+    localizacao: '',
+    equipamentos: [],
     status: true,
   });
 
   /**
-   * Carrega a lista de professores da API
+   * Carrega a lista de laboratórios da API
    */
-  const carregarProfessores = async () => {
+  const carregarLaboratorios = async () => {
     setLoading(true);
     try {
-      const response = await professoresService.listar();
-      setProfessores(response.data);
+      const response = await laboratoriosService.listar();
+      setLaboratorios(response.data);
     } catch (error) {
       console.error('Erro ao carregar:', error);
-      mostrarSnackbar('Erro ao carregar professores', 'error');
+      mostrarSnackbar('Erro ao carregar laboratórios', 'error');
     } finally {
       setLoading(false);
     }
@@ -79,24 +81,30 @@ const Professores = () => {
   };
 
   /**
-   * Abre o modal para criar ou editar professor
-   * @param {Object|null} professor - Dados do professor para edição ou null para criação
+   * Abre o dialog para criar ou editar laboratório
+   * @param {Object|null} laboratorio - Dados do laboratório para edição ou null para criação
    */
-  const abrirDialog = (professor = null) => {
-    if (professor) {
-      setEditingId(professor._id);
+  const abrirDialog = (laboratorio = null) => {
+    if (laboratorio) {
+      setEditingId(laboratorio._id);
       setFormData({
-        nome: professor.nome || '',
-        email: professor.email || '',
-        telefone: professor.telefone || '',
-        status: professor.status !== undefined ? professor.status : true,
+        nome: laboratorio.nome || '',
+        codigo: laboratorio.codigo || '',
+        capacidade: laboratorio.capacidade || '',
+        descricao: laboratorio.descricao || '',
+        localizacao: laboratorio.localizacao || '',
+        equipamentos: Array.isArray(laboratorio.equipamentos) ? laboratorio.equipamentos : [],
+        status: laboratorio.status !== undefined ? laboratorio.status : true,
       });
     } else {
       setEditingId(null);
       setFormData({
         nome: '',
-        email: '',
-        telefone: '',
+        codigo: '',
+        capacidade: '',
+        descricao: '',
+        localizacao: '',
+        equipamentos: [],
         status: true,
       });
     }
@@ -104,7 +112,7 @@ const Professores = () => {
   };
 
   /**
-   * Fecha o modal de criação/edição
+   * Fecha o dialog de criação/edição
    */
   const fecharDialog = () => {
     setDialogOpen(false);
@@ -112,37 +120,45 @@ const Professores = () => {
   };
 
   /**
-   * Salva os dados do professor (criar ou atualizar)
+   * Salva o laboratório (criar ou atualizar)
    */
-  const salvarProfessor = async () => {
+  const salvarLaboratorio = async () => {
     try {
+      const dadosParaSalvar = {
+        ...formData,
+        capacidade: parseInt(formData.capacidade) || 0,
+        equipamentos: typeof formData.equipamentos === 'string' 
+          ? formData.equipamentos.split(',').map(eq => eq.trim()).filter(eq => eq)
+          : formData.equipamentos,
+      };
+
       if (editingId) {
-        await professoresService.atualizar(editingId, formData);
-        mostrarSnackbar('Professor atualizado com sucesso');
+        await laboratoriosService.atualizar(editingId, dadosParaSalvar);
+        mostrarSnackbar('Laboratório atualizado com sucesso');
       } else {
-        await professoresService.criar(formData);
-        mostrarSnackbar('Professor criado com sucesso');
+        await laboratoriosService.criar(dadosParaSalvar);
+        mostrarSnackbar('Laboratório criado com sucesso');
       }
       fecharDialog();
-      carregarProfessores();
+      carregarLaboratorios();
     } catch (error) {
-      const message = error.response?.data?.message || 'Erro ao salvar professor';
+      const message = error.response?.data?.message || 'Erro ao salvar laboratório';
       mostrarSnackbar(message, 'error');
     }
   };
 
   /**
-   * Remove um professor
-   * @param {string} id - ID do professor a ser removido
+   * Remove um laboratório
+   * @param {string} id - ID do laboratório a ser removido
    */
-  const removerProfessor = async (id) => {
-    if (window.confirm('Tem certeza que deseja remover este professor?')) {
+  const removerLaboratorio = async (id) => {
+    if (window.confirm('Tem certeza que deseja remover este laboratório?')) {
       try {
-        await professoresService.remover(id);
-        mostrarSnackbar('Professor removido com sucesso');
-        carregarProfessores();
+        await laboratoriosService.remover(id);
+        mostrarSnackbar('Laboratório removido com sucesso');
+        carregarLaboratorios();
       } catch (error) {
-        const message = error.response?.data?.message || 'Erro ao remover professor';
+        const message = error.response?.data?.message || 'Erro ao remover laboratório';
         mostrarSnackbar(message, 'error');
       }
     }
@@ -150,7 +166,7 @@ const Professores = () => {
 
   /**
    * Manipula a ordenação da tabela
-   * @param {string} property - Propriedade para ordenação
+   * @param {string} property - Propriedade pela qual ordenar
    */
   const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -159,10 +175,10 @@ const Professores = () => {
   };
 
   /**
-   * Compara dois valores para ordenação
-   * @param {any} a - Primeiro valor
-   * @param {any} b - Segundo valor
-   * @param {string} orderBy - Propriedade para ordenação
+   * Função de comparação para ordenação
+   * @param {Object} a - Primeiro item
+   * @param {Object} b - Segundo item
+   * @param {string} orderBy - Propriedade de ordenação
    * @returns {number} Resultado da comparação
    */
   const descendingComparator = (a, b, orderBy) => {
@@ -176,10 +192,10 @@ const Professores = () => {
   };
 
   /**
-   * Função de comparação para ordenação
+   * Obtém o comparador para ordenação
    * @param {string} order - Direção da ordenação (asc/desc)
-   * @param {string} orderBy - Propriedade para ordenação
-   * @returns {Function} Função de comparação
+   * @param {string} orderBy - Propriedade de ordenação
+   * @returns {Function} Função comparadora
    */
   const getComparator = (order, orderBy) => {
     return order === 'desc'
@@ -188,18 +204,18 @@ const Professores = () => {
   };
 
   /**
-   * Filtra e ordena a lista de professores
+   * Filtra e ordena os laboratórios
    */
-  const professoresFiltrados = professores
-    .filter((professor) =>
-      Object.values(professor).some((value) =>
+  const laboratoriosFiltradosEOrdenados = laboratorios
+    .filter((laboratorio) =>
+      Object.values(laboratorio).some((value) =>
         String(value).toLowerCase().includes(filtro.toLowerCase())
       )
     )
     .sort(getComparator(order, orderBy));
 
   useEffect(() => {
-    carregarProfessores();
+    carregarLaboratorios();
   }, []);
 
   return (
@@ -211,12 +227,12 @@ const Professores = () => {
             startIcon={<AddIcon />}
             onClick={() => abrirDialog()}
           >
-            Novo Professor
+            Novo Laboratório
           </Button>
           
           <TextField
             size="small"
-            placeholder="Filtrar professores..."
+            placeholder="Filtrar laboratórios..."
             value={filtro}
             onChange={(e) => setFiltro(e.target.value)}
             InputProps={{
@@ -242,20 +258,29 @@ const Professores = () => {
               </TableCell>
               <TableCell>
                 <TableSortLabel
-                  active={orderBy === 'email'}
-                  direction={orderBy === 'email' ? order : 'asc'}
-                  onClick={() => handleRequestSort('email')}
+                  active={orderBy === 'codigo'}
+                  direction={orderBy === 'codigo' ? order : 'asc'}
+                  onClick={() => handleRequestSort('codigo')}
                 >
-                  Email
+                  Código
                 </TableSortLabel>
               </TableCell>
               <TableCell>
                 <TableSortLabel
-                  active={orderBy === 'telefone'}
-                  direction={orderBy === 'telefone' ? order : 'asc'}
-                  onClick={() => handleRequestSort('telefone')}
+                  active={orderBy === 'capacidade'}
+                  direction={orderBy === 'capacidade' ? order : 'asc'}
+                  onClick={() => handleRequestSort('capacidade')}
                 >
-                  Telefone
+                  Capacidade
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={orderBy === 'localizacao'}
+                  direction={orderBy === 'localizacao' ? order : 'asc'}
+                  onClick={() => handleRequestSort('localizacao')}
+                >
+                  Localização
                 </TableSortLabel>
               </TableCell>
               <TableCell>
@@ -271,27 +296,28 @@ const Professores = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {professoresFiltrados.map((professor) => (
-              <TableRow key={professor._id}>
-                <TableCell>{professor.nome}</TableCell>
-                <TableCell>{professor.email}</TableCell>
-                <TableCell>{professor.telefone}</TableCell>
+            {laboratoriosFiltradosEOrdenados.map((laboratorio) => (
+              <TableRow key={laboratorio._id}>
+                <TableCell>{laboratorio.nome}</TableCell>
+                <TableCell>{laboratorio.codigo}</TableCell>
+                <TableCell>{laboratorio.capacidade}</TableCell>
+                <TableCell>{laboratorio.localizacao}</TableCell>
                 <TableCell>
-                  <Typography color={professor.status ? 'success.main' : 'error.main'}>
-                    {professor.status ? 'Ativo' : 'Inativo'}
+                  <Typography color={laboratorio.status ? 'success.main' : 'error.main'}>
+                    {laboratorio.status ? 'Ativo' : 'Inativo'}
                   </Typography>
                 </TableCell>
                 <TableCell>
                   <IconButton
                     size="small"
-                    onClick={() => abrirDialog(professor)}
+                    onClick={() => abrirDialog(laboratorio)}
                     color="primary"
                   >
                     <EditIcon />
                   </IconButton>
                   <IconButton
                     size="small"
-                    onClick={() => removerProfessor(professor._id)}
+                    onClick={() => removerLaboratorio(laboratorio._id)}
                     color="error"
                   >
                     <DeleteIcon />
@@ -305,7 +331,7 @@ const Professores = () => {
 
       <Dialog open={dialogOpen} onClose={fecharDialog} maxWidth="md" fullWidth>
         <DialogTitle>
-          {editingId ? 'Editar Professor' : 'Novo Professor'}
+          {editingId ? 'Editar Laboratório' : 'Novo Laboratório'}
         </DialogTitle>
         <DialogContent>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: 1 }}>
@@ -317,18 +343,45 @@ const Professores = () => {
               required
             />
             <TextField
-              label="Email *"
-              type="email"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              label="Código *"
+              value={formData.codigo}
+              onChange={(e) => setFormData({ ...formData, codigo: e.target.value })}
               fullWidth
               required
             />
             <TextField
-              label="Telefone"
-              value={formData.telefone}
-              onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
+              label="Capacidade *"
+              type="number"
+              value={formData.capacidade}
+              onChange={(e) => setFormData({ ...formData, capacidade: e.target.value })}
               fullWidth
+              required
+            />
+            <TextField
+              label="Localização *"
+              value={formData.localizacao}
+              onChange={(e) => setFormData({ ...formData, localizacao: e.target.value })}
+              fullWidth
+              required
+              placeholder="Ex: Bloco A - Sala 101"
+            />
+            <TextField
+              label="Descrição"
+              value={formData.descricao}
+              onChange={(e) => setFormData({ ...formData, descricao: e.target.value })}
+              fullWidth
+              multiline
+              rows={2}
+              placeholder="Descrição do laboratório..."
+            />
+            <TextField
+              label="Equipamentos"
+              value={Array.isArray(formData.equipamentos) ? formData.equipamentos.join(', ') : formData.equipamentos}
+              onChange={(e) => setFormData({ ...formData, equipamentos: e.target.value })}
+              fullWidth
+              multiline
+              rows={3}
+              placeholder="Separe os equipamentos por vírgula..."
             />
             <FormControlLabel
               control={
@@ -343,7 +396,7 @@ const Professores = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={fecharDialog}>Cancelar</Button>
-          <Button onClick={salvarProfessor} variant="contained">
+          <Button onClick={salvarLaboratorio} variant="contained">
             {editingId ? 'Atualizar' : 'Criar'}
           </Button>
         </DialogActions>
@@ -366,4 +419,4 @@ const Professores = () => {
   );
 };
 
-export default Professores;
+export default Laboratorios;
