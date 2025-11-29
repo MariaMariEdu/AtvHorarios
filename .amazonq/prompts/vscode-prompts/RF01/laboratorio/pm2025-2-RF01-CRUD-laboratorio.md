@@ -59,6 +59,7 @@ f) **DELETE /api/v1/laboratorios/:id**
 
 ### 3. Critérios de Aceite
 * O código do Controller e da Rota deve estar em **Markdown** e ser funcional.
+* Criar a rota no Server.js
 * `GET /api/v1/laboratorios` deve retornar um array JSON (vazio se não houver registros).
 * `PUT/DELETE` com ID inexistente devem retornar `404`.
 * Swagger/OpenAPI acessível (ex.: `/api-docs`) com exemplos válidos para todos os endpoints.

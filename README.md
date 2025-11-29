@@ -124,6 +124,22 @@ npm start
 - `409 Conflict` - Código do laboratório já existe
 - `404 Not Found` - Laboratório não encontrado (PUT/DELETE)
 
+### Blocos de Horário
+- `POST /api/v1/blocos-horarios` - Criar bloco de horário
+- `GET /api/v1/blocos-horarios` - Listar blocos de horário (com filtros)
+- `GET /api/v1/blocos-horarios/:id` - Buscar bloco por ID
+- `PUT /api/v1/blocos-horarios/:id` - Atualizar bloco de horário
+- `DELETE /api/v1/blocos-horarios/:id` - Remover bloco de horário
+
+#### Parâmetros Específicos de Blocos de Horário
+- `?nome=texto` - Filtrar por nome (contém)
+- `?turno=Matutino|Vespertino|Noturno` - Filtrar por turno
+- `?page=1&limit=20` - Paginação
+
+#### Respostas de Erro Específicas
+- `409 Conflict` - Nome do bloco já existe
+- `404 Not Found` - Bloco não encontrado (PUT/DELETE)
+
 #### Parâmetros de Consulta
 - `?ativo=true|false` - Filtrar por status
 - `?nome=texto` - Filtrar por nome (contém)
@@ -182,6 +198,7 @@ npm start
 - CRUD completo de Professores com interface mobile otimizada
 - CRUD completo de Disciplinas com interface mobile otimizada
 - CRUD completo de Laboratórios com interface mobile otimizada
+- CRUD completo de Blocos de Horário com interface mobile otimizada
 - Cards responsivos para listagem de registros
 - Formulários modais para criação/edição com menus dropdown
 - Filtros em tempo real por nome e outros campos
@@ -191,10 +208,13 @@ npm start
 - Confirmações nativas para exclusões
 - Ícones vetoriais com React Native Vector Icons
 - Gerenciamento de estado local
-- Abas para navegação entre Instituições, Professores, Cursos, Disciplinas e Laboratórios
+- Abas para navegação entre Instituições, Professores, Cursos, Disciplinas, Laboratórios e Blocos de Horário
 - Seleção de cursos e professores via menus interativos
-- Validação de código único com tratamento de erro 409
+- Seleção de turnos via menu dropdown para blocos de horário
+- Validação de código/nome único com tratamento de erro 409
 - Tratamento específico de erros 404 para operações PUT/DELETE
+- Formatação de horários no padrão brasileiro (HH:mm)
+- Chips coloridos para identificação visual de turnos
 
 ✅ **Modelo de Dados**
 - **Instituições**: Schema Mongoose com validações
@@ -225,6 +245,17 @@ npm start
   - Tratamento de conflitos (código duplicado) com status 409
   - Validação de operações com IDs inexistentes (status 404)
   - Filtros por nome, localização, capacidade e status
+- **Blocos de Horário**: Schema Mongoose com validações
+  - Campos: nome, horarioInicial, horarioFinal, turno, duracao
+  - Nome único no banco com validação
+  - Horários no formato HH:mm com validação
+  - Duração calculada automaticamente em minutos
+  - CRUD completo implementado no mobile
+  - Interface mobile com cards e formulários otimizados
+  - Tratamento de conflitos (nome duplicado) com status 409
+  - Validação de operações com IDs inexistentes (status 404)
+  - Filtros por nome, turno e horários
+  - Chips coloridos por turno (Matutino, Vespertino, Noturno)
 - Timestamps automáticos (createdAt, updatedAt)
 - Índices para performance
 
@@ -240,11 +271,12 @@ npm start
 ✅ **Documentação e Qualidade**
 - README.md completo e atualizado
 - Documentos de requisitos e horários dos laboratórios
-- JSDoc em todo o código backend
+- JSDoc em todo o código backend e mobile
 - Documentação Swagger da API com exemplos
 - Comentários em português
 - Estrutura de projeto documentada
 - Status do projeto (PROJETO_STATUS.md)
+- Documentação específica de módulos mobile (BLOCOS_HORARIOS_MOBILE.md)
 
 ✅ **Scripts e Automação**
 - Scripts npm para desenvolvimento (dev) e produção (start)

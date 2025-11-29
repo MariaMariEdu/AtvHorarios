@@ -19,6 +19,7 @@ import {
   Person as PersonIcon,
   MenuBook as MenuBookIcon,
   Science as ScienceIcon,
+  Schedule as ScheduleIcon,
   Close as CloseIcon,
 } from '@mui/icons-material';
 import Instituicoes from '../Instituicoes/Instituicoes';
@@ -26,6 +27,7 @@ import Cursos from '../Cursos/Cursos';
 import Professores from '../Professores/Professores';
 import Disciplinas from '../Disciplinas/Disciplinas';
 import Laboratorios from '../Laboratorios/Laboratorios';
+import BlocosHorario from '../BlocosHorario/BlocosHorario';
 
 const Menu = ({ open, onClose }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -81,6 +83,14 @@ const Menu = ({ open, onClose }) => {
     handleOpenModal('Gerenciar Laboratórios', <Laboratorios />);
   };
 
+  /**
+   * Manipula o clique no menu de Blocos de Horário
+   * Abre o modal com o componente de gerenciamento de blocos de horário
+   */
+  const handleBlocosHorarioClick = () => {
+    handleOpenModal('Gerenciar Blocos de Horário', <BlocosHorario />);
+  };
+
   return (
     <>
       <Drawer anchor="left" open={open} onClose={onClose}>
@@ -130,6 +140,14 @@ const Menu = ({ open, onClose }) => {
                   <ScienceIcon />
                 </ListItemIcon>
                 <ListItemText primary="Laboratórios" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton onClick={handleBlocosHorarioClick}>
+                <ListItemIcon>
+                  <ScheduleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Blocos de Horário" />
               </ListItemButton>
             </ListItem>
           </List>

@@ -66,9 +66,7 @@ const Disciplinas = () => {
     setLoading(true);
     try {
       const response = await disciplinasService.listar();
-      console.log('Response disciplinas:', response.data);
-      const disciplinasData = response.data.disciplinas || response.data || [];
-      setDisciplinas(disciplinasData);
+      setDisciplinas(response.data || []);
     } catch (error) {
       console.error('Erro ao carregar disciplinas:', error);
       mostrarSnackbar('Erro ao carregar disciplinas', 'error');
@@ -83,9 +81,8 @@ const Disciplinas = () => {
   const carregarCursos = async () => {
     try {
       const response = await cursosService.listar();
-      console.log('Response cursos:', response.data);
-      const cursosData = response.data.cursos || response.data || [];
-      setCursos(cursosData);
+      console.log('Cursos carregados:', response.data);
+      setCursos(response.data.cursos || response.data || []);
     } catch (error) {
       console.error('Erro ao carregar cursos:', error);
     }
@@ -97,9 +94,7 @@ const Disciplinas = () => {
   const carregarProfessores = async () => {
     try {
       const response = await professoresService.listar();
-      console.log('Response professores:', response.data);
-      const professoresData = response.data.professores || response.data || [];
-      setProfessores(professoresData);
+      setProfessores(response.data || []);
     } catch (error) {
       console.error('Erro ao carregar professores:', error);
     }
@@ -423,13 +418,14 @@ const Disciplinas = () => {
               required
               inputProps={{ min: 1, max: 1000 }}
             />
-            <FormControl fullWidth required>
-              <InputLabel>Curso *</InputLabel>
+            <FormControl fullWidth>
+              <InputLabel>Curso</InputLabel>
               <Select
                 value={formData.curso}
                 onChange={(e) => setFormData({ ...formData, curso: e.target.value })}
-                label="Curso *"
+                label="Curso"
               >
+                <MenuItem value="">Nenhum</MenuItem>
                 {cursos.map((curso) => (
                   <MenuItem key={curso._id} value={curso._id}>
                     {curso.nome}

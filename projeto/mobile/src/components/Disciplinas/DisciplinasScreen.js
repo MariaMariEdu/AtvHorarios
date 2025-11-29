@@ -82,7 +82,7 @@ const DisciplinasScreen = () => {
   const carregarCursos = async () => {
     try {
       const response = await cursosService.listar();
-      setCursos(response.data || []);
+      setCursos(response.data.cursos || response.data || []);
     } catch (error) {
       console.error('Erro ao carregar cursos:', error);
       setCursos([]);
@@ -244,8 +244,10 @@ const DisciplinasScreen = () => {
    * @returns {string} Nome do curso ou ID se não encontrado
    */
   const obterNomeCurso = (cursoId) => {
+    if (!cursoId) return 'Sem curso';
+    if (typeof cursoId === 'object') return cursoId.nome || 'Sem curso';
     const curso = cursos.find(c => c._id === cursoId);
-    return curso ? curso.nome : cursoId;
+    return curso ? curso.nome : 'Sem curso';
   };
 
   /**
@@ -254,8 +256,10 @@ const DisciplinasScreen = () => {
    * @returns {string} Nome do professor ou ID se não encontrado
    */
   const obterNomeProfessor = (professorId) => {
+    if (!professorId) return 'Sem professor';
+    if (typeof professorId === 'object') return professorId.nome || 'Sem professor';
     const professor = professores.find(p => p._id === professorId);
-    return professor ? professor.nome : professorId;
+    return professor ? professor.nome : 'Sem professor';
   };
 
   /**
