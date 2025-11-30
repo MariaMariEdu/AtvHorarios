@@ -52,15 +52,7 @@ const listarBlocosHorario = async (req, res) => {
 
     const total = await BlocoHorario.countDocuments(filtros);
 
-    res.json({
-      blocos,
-      pagination: {
-        page: parseInt(page),
-        limit: parseInt(limit),
-        total,
-        pages: Math.ceil(total / limit)
-      }
-    });
+    res.json(blocos);
   } catch (error) {
     res.status(500).json({
       message: 'Erro interno do servidor',

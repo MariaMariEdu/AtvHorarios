@@ -24,7 +24,7 @@ import {
   Edit as EditIcon,
   Delete as DeleteIcon,
 } from '@mui/icons-material';
-import axios from 'axios';
+import { blocosHorarioService } from '../../services/api';
 
 const BlocosHorario = () => {
   const [blocosHorario, setBlocosHorario] = useState([]);
@@ -49,8 +49,8 @@ const BlocosHorario = () => {
   const fetchBlocosHorario = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:3000/api/v1/blocos-horario');
-      setBlocosHorario(response.data.blocos || []);
+      const response = await blocosHorarioService.listar();
+      setBlocosHorario(response.data.blocos || response.data || []);
     } catch (error) {
       console.error('Erro:', error);
       setBlocosHorario([]);
@@ -108,10 +108,10 @@ const BlocosHorario = () => {
     try {
       setLoading(true);
       if (editingBloco) {
-        await axios.put(`http://localhost:3000/api/v1/blocos-horario/${editingBloco._id}`, formData);
+        await blocosHorarioService.atualizar(editingBloco._id, formData);
         showSnackbar('Bloco atualizado com sucesso');
       } else {
-        await axios.post('http://localhost:3000/api/v1/blocos-horario', formData);
+        await blocosHorarioService.criar(formData);
         showSnackbar('Bloco criado com sucesso');
       }
       handleCloseDialog();
@@ -128,7 +128,7 @@ const BlocosHorario = () => {
     if (!window.confirm('Excluir este bloco?')) return;
     try {
       setLoading(true);
-      await axios.delete(`http://localhost:3000/api/v1/blocos-horario/${id}`);
+      await blocosHorarioService.remover(id);
       showSnackbar('Bloco excluído');
       fetchBlocosHorario();
     } catch (error) {

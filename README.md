@@ -125,11 +125,11 @@ npm start
 - `404 Not Found` - Laboratório não encontrado (PUT/DELETE)
 
 ### Blocos de Horário
-- `POST /api/v1/blocos-horarios` - Criar bloco de horário
-- `GET /api/v1/blocos-horarios` - Listar blocos de horário (com filtros)
-- `GET /api/v1/blocos-horarios/:id` - Buscar bloco por ID
-- `PUT /api/v1/blocos-horarios/:id` - Atualizar bloco de horário
-- `DELETE /api/v1/blocos-horarios/:id` - Remover bloco de horário
+- `POST /api/v1/blocos-horario` - Criar bloco de horário
+- `GET /api/v1/blocos-horario` - Listar blocos de horário (com filtros)
+- `GET /api/v1/blocos-horario/:id` - Buscar bloco por ID
+- `PUT /api/v1/blocos-horario/:id` - Atualizar bloco de horário
+- `DELETE /api/v1/blocos-horario/:id` - Remover bloco de horário
 
 #### Parâmetros Específicos de Blocos de Horário
 - `?nome=texto` - Filtrar por nome (contém)
@@ -139,6 +139,33 @@ npm start
 #### Respostas de Erro Específicas
 - `409 Conflict` - Nome do bloco já existe
 - `404 Not Found` - Bloco não encontrado (PUT/DELETE)
+
+### Aulas
+- `POST /api/v1/aulas` - Criar aula
+- `GET /api/v1/aulas` - Listar aulas (com filtros)
+- `GET /api/v1/aulas/:id` - Buscar aula por ID
+- `PUT /api/v1/aulas/:id` - Atualizar aula
+- `DELETE /api/v1/aulas/:id` - Remover aula
+
+#### Parâmetros Específicos de Aulas
+- `?semestre=texto` - Filtrar por semestre
+- `?cursoId=id` - Filtrar por ID do curso
+- `?disciplinaId=id` - Filtrar por ID da disciplina
+- `?professorId=id` - Filtrar por ID do professor
+- `?laboratorioId=id` - Filtrar por ID do laboratório
+- `?diaSemana=texto` - Filtrar por dia da semana
+- `?page=1&limit=20` - Paginação
+
+#### Respostas de Erro Específicas
+- `409 Conflict` - Conflito de horário (laboratório ocupado ou professor com choque de horário)
+- `404 Not Found` - Aula não encontrada (PUT/DELETE)
+- `400 Bad Request` - Dados inválidos (data fim anterior à data início)
+
+#### Funcionalidades Avançadas
+- Verificação automática de conflitos de horário
+- População de dados relacionados (curso, disciplina, professor, laboratório, blocos)
+- Validação de sobreposição de períodos letivos
+- Suporte a múltiplos blocos de horário por aula
 
 #### Parâmetros de Consulta
 - `?ativo=true|false` - Filtrar por status
@@ -181,6 +208,9 @@ npm start
 - Componente de Instituições com CRUD completo
 - Componente de Professores com CRUD completo
 - Componente de Disciplinas com CRUD completo
+- Componente de Laboratórios com CRUD completo
+- Componente de Blocos de Horário com CRUD completo
+- Componente de Aulas com CRUD completo e integração total
 - Tabelas de dados com ordenação e filtros
 - Modais para criação e edição de registros
 - Integração com API do backend via Axios
@@ -190,6 +220,14 @@ npm start
 - Estados de loading e tratamento de erros
 - Ordenação por colunas (TableSortLabel)
 - Filtros em tempo real por texto
+- Filtros avançados por múltiplos campos
+- Seleção múltipla de blocos de horário com chips
+- Validação de conflitos de horário com mensagens específicas
+- Formatação de datas no padrão brasileiro
+- Exibição de horários detalhados dos blocos
+- Campos de data com validação de período
+- Dropdowns dinâmicos para seleção de entidades relacionadas
+- Tratamento de erros 409 (conflitos) e 404 (não encontrado)
 
 ✅ **Mobile App - React Native + Expo**
 - Projeto React Native 0.81 com Expo 54
@@ -256,6 +294,21 @@ npm start
   - Validação de operações com IDs inexistentes (status 404)
   - Filtros por nome, turno e horários
   - Chips coloridos por turno (Matutino, Vespertino, Noturno)
+- **Aulas**: Schema Mongoose com validações
+  - Campos: semestre, cursoId, disciplinaId, professorId, laboratorioId, diaSemana, blocos, dataInicio, dataFim
+  - Referências para Curso, Disciplina, Professor, Laboratório e Blocos de Horário
+  - Validação de conflitos de horário (laboratório ocupado, professor com choque)
+  - Verificação de sobreposição de períodos (dataInicio/dataFim)
+  - CRUD completo implementado no frontend e backend
+  - Interface web com filtros avançados por múltiplos campos
+  - Seleção múltipla de blocos de horário com chips visuais
+  - Tratamento de conflitos com mensagens específicas (status 409)
+  - Formatação de datas no padrão brasileiro
+  - Exibição de horários dos blocos na tabela
+  - Ordenação por semestre, dia da semana e outros campos
+  - Validação de campos obrigatórios e datas válidas
+  - População automática de dados relacionados (curso, disciplina, professor, laboratório)
+  - Filtros por semestre, curso, disciplina, professor, laboratório e dia da semana
 - Timestamps automáticos (createdAt, updatedAt)
 - Índices para performance
 

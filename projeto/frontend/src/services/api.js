@@ -184,4 +184,72 @@ export const laboratoriosService = {
   remover: (id) => api.delete(`/laboratorios/${id}`),
 };
 
+/**
+ * Serviços para operações com blocos de horário
+ */
+export const blocosHorarioService = {
+  /**
+   * Lista todos os blocos de horário
+   * @param {Object} params - Parâmetros de consulta
+   * @returns {Promise} Promise com dados dos blocos de horário
+   */
+  listar: (params = {}) => api.get('/blocos-horario', { params }),
+
+  /**
+   * Cria um novo bloco de horário
+   * @param {Object} data - Dados do bloco de horário
+   * @returns {Promise} Promise com dados do bloco criado
+   */
+  criar: (data) => api.post('/blocos-horario', data),
+
+  /**
+   * Atualiza um bloco de horário
+   * @param {string} id - ID do bloco de horário
+   * @param {Object} data - Dados para atualização
+   * @returns {Promise} Promise com dados do bloco atualizado
+   */
+  atualizar: (id, data) => api.put(`/blocos-horario/${id}`, data),
+
+  /**
+   * Remove um bloco de horário
+   * @param {string} id - ID do bloco de horário
+   * @returns {Promise} Promise da operação
+   */
+  remover: (id) => api.delete(`/blocos-horario/${id}`),
+};
+
+/**
+ * Serviços para operações com aulas
+ */
+export const aulasService = {
+  /**
+   * Lista todas as aulas
+   * @param {Object} params - Parâmetros de consulta
+   * @returns {Promise} Promise com dados das aulas
+   */
+  listar: (params = {}) => api.get('/aulas', { params }),
+
+  /**
+   * Cria uma nova aula
+   * @param {Object} data - Dados da aula
+   * @returns {Promise} Promise com dados da aula criada
+   */
+  criar: (data) => api.post('/aulas', data),
+
+  /**
+   * Atualiza uma aula
+   * @param {string} id - ID da aula
+   * @param {Object} data - Dados para atualização
+   * @returns {Promise} Promise com dados da aula atualizada
+   */
+  atualizar: (id, data) => api.put(`/aulas/${id}`, data),
+
+  /**
+   * Remove uma aula
+   * @param {string} id - ID da aula
+   * @returns {Promise} Promise da operação
+   */
+  remover: (id) => api.delete(`/aulas/${id}`),
+};
+
 export default api;

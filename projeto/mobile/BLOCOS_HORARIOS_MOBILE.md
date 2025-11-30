@@ -33,7 +33,7 @@ Módulo mobile para gerenciamento de blocos de horário do sistema de laboratór
 - ✅ **Tratamento de conexão**: Mensagens de erro de rede
 
 ### Integração com API
-- **Endpoint**: `/api/v1/blocos-horarios`
+- **Endpoint**: `/api/v1/blocos-horario`
 - **Métodos**: GET, POST, PUT, DELETE
 - **Filtros**: Busca por nome, horário, turno
 - **Paginação**: Suporte a parâmetros page e limit
