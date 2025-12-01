@@ -7,6 +7,9 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import InstituicoesScreen from './src/components/Instituicoes/InstituicoesScreen';
 import ProfessoresScreen from './src/components/Professores/ProfessoresScreen';
 import CursosScreen from './src/components/Cursos/CursosScreen';
+import DisciplinasScreen from './src/components/Disciplinas/DisciplinasScreen';
+import LaboratoriosScreen from './src/components/Laboratorios/LaboratoriosScreen';
+import BlocosHorariosScreen from './src/components/BlocosHorarios/BlocosHorariosScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -48,6 +51,36 @@ export default function App() {
               title: 'Cursos',
               tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons name="school" size={size} color={color} />
+              ),
+            }}
+          />
+          <Tab.Screen 
+            name="Disciplinas" 
+            component={DisciplinasScreen}
+            options={{
+              title: 'Disciplinas',
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="book-open-variant" size={size} color={color} />
+              ),
+            }}
+          />
+          <Tab.Screen 
+            name="Laboratorios" 
+            component={LaboratoriosScreen}
+            options={{
+              title: 'Laboratórios',
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="flask" size={size} color={color} />
+              ),
+            }}
+          />
+          <Tab.Screen 
+            name="BlocosHorarios" 
+            component={BlocosHorariosScreen}
+            options={{
+              title: 'Blocos Horário',
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="clock-outline" size={size} color={color} />
               ),
             }}
           />

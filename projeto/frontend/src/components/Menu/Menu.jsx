@@ -17,11 +17,19 @@ import {
   Business as BusinessIcon,
   School as SchoolIcon,
   Person as PersonIcon,
+  MenuBook as MenuBookIcon,
+  Science as ScienceIcon,
+  Schedule as ScheduleIcon,
+  Class as ClassIcon,
   Close as CloseIcon,
 } from '@mui/icons-material';
 import Instituicoes from '../Instituicoes/Instituicoes';
 import Cursos from '../Cursos/Cursos';
 import Professores from '../Professores/Professores';
+import Disciplinas from '../Disciplinas/Disciplinas';
+import Laboratorios from '../Laboratorios/Laboratorios';
+import BlocosHorario from '../BlocosHorario/BlocosHorario';
+import Aulas from '../Aulas/Aulas';
 
 const Menu = ({ open, onClose }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -61,6 +69,38 @@ const Menu = ({ open, onClose }) => {
     handleOpenModal('Gerenciar Professores', <Professores />);
   };
 
+  /**
+   * Manipula o clique no menu de Disciplinas
+   * Abre o modal com o componente de gerenciamento de disciplinas
+   */
+  const handleDisciplinasClick = () => {
+    handleOpenModal('Gerenciar Disciplinas', <Disciplinas />);
+  };
+
+  /**
+   * Manipula o clique no menu de Laboratórios
+   * Abre o modal com o componente de gerenciamento de laboratórios
+   */
+  const handleLaboratoriosClick = () => {
+    handleOpenModal('Gerenciar Laboratórios', <Laboratorios />);
+  };
+
+  /**
+   * Manipula o clique no menu de Blocos de Horário
+   * Abre o modal com o componente de gerenciamento de blocos de horário
+   */
+  const handleBlocosHorarioClick = () => {
+    handleOpenModal('Gerenciar Blocos de Horário', <BlocosHorario />);
+  };
+
+  /**
+   * Manipula o clique no menu de Aulas
+   * Abre o modal com o componente de gerenciamento de aulas
+   */
+  const handleAulasClick = () => {
+    handleOpenModal('Gerenciar Aulas', <Aulas />);
+  };
+
   return (
     <>
       <Drawer anchor="left" open={open} onClose={onClose}>
@@ -94,6 +134,38 @@ const Menu = ({ open, onClose }) => {
                   <PersonIcon />
                 </ListItemIcon>
                 <ListItemText primary="Professores" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton onClick={handleDisciplinasClick}>
+                <ListItemIcon>
+                  <MenuBookIcon />
+                </ListItemIcon>
+                <ListItemText primary="Disciplinas" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton onClick={handleLaboratoriosClick}>
+                <ListItemIcon>
+                  <ScienceIcon />
+                </ListItemIcon>
+                <ListItemText primary="Laboratórios" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton onClick={handleBlocosHorarioClick}>
+                <ListItemIcon>
+                  <ScheduleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Blocos de Horário" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton onClick={handleAulasClick}>
+                <ListItemIcon>
+                  <ClassIcon />
+                </ListItemIcon>
+                <ListItemText primary="Aulas" />
               </ListItemButton>
             </ListItem>
           </List>

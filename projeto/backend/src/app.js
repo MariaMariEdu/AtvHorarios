@@ -23,9 +23,17 @@ mongoose.connect(MONGODB_URI)
 const instituicoesRoutes = require('./routes/instituicoes');
 const cursosRoutes = require('./routes/cursos');
 const professorRoutes = require('./routes/professorRoutes');
+const disciplinaRoutes = require('./routes/disciplinaRoutes');
+const laboratorioRoutes = require('./routes/laboratorioRoutes');
+const blocoHorarioRoutes = require('./routes/blocoHorarioRoutes');
+const aulaRoutes = require('./routes/aulaRoutes');
 app.use('/api/v1/instituicoes', instituicoesRoutes);
 app.use('/api/v1/cursos', cursosRoutes);
 app.use('/api/v1/professores', professorRoutes);
+app.use('/api/v1/disciplinas', disciplinaRoutes);
+app.use('/api/v1/laboratorios', laboratorioRoutes);
+app.use('/api/v1/blocos-horario', blocoHorarioRoutes);
+app.use('/api/v1/aulas', aulaRoutes);
 
 // Rota de teste
 app.get('/', (req, res) => {

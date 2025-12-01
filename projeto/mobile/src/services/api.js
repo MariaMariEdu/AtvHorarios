@@ -116,4 +116,106 @@ export const cursosService = {
   remover: (id) => api.delete(`/cursos/${id}`),
 };
 
+/**
+ * Serviços para operações com disciplinas
+ */
+export const disciplinasService = {
+  /**
+   * Lista todas as disciplinas
+   * @param {Object} params - Parâmetros de consulta
+   * @returns {Promise} Promise com dados das disciplinas
+   */
+  listar: (params = {}) => api.get('/disciplinas', { params }),
+
+  /**
+   * Cria uma nova disciplina
+   * @param {Object} data - Dados da disciplina
+   * @returns {Promise} Promise com dados da disciplina criada
+   */
+  criar: (data) => api.post('/disciplinas', data),
+
+  /**
+   * Atualiza uma disciplina
+   * @param {string} id - ID da disciplina
+   * @param {Object} data - Dados para atualização
+   * @returns {Promise} Promise com dados da disciplina atualizada
+   */
+  atualizar: (id, data) => api.put(`/disciplinas/${id}`, data),
+
+  /**
+   * Remove uma disciplina
+   * @param {string} id - ID da disciplina
+   * @returns {Promise} Promise da operação
+   */
+  remover: (id) => api.delete(`/disciplinas/${id}`),
+};
+
+/**
+ * Serviços para operações com laboratórios
+ */
+export const laboratoriosService = {
+  /**
+   * Lista todos os laboratórios
+   * @param {Object} params - Parâmetros de consulta
+   * @returns {Promise} Promise com dados dos laboratórios
+   */
+  listar: (params = {}) => api.get('/laboratorios', { params }),
+
+  /**
+   * Cria um novo laboratório
+   * @param {Object} data - Dados do laboratório
+   * @returns {Promise} Promise com dados do laboratório criado
+   */
+  criar: (data) => api.post('/laboratorios', data),
+
+  /**
+   * Atualiza um laboratório
+   * @param {string} id - ID do laboratório
+   * @param {Object} data - Dados para atualização
+   * @returns {Promise} Promise com dados do laboratório atualizado
+   */
+  atualizar: (id, data) => api.put(`/laboratorios/${id}`, data),
+
+  /**
+   * Remove um laboratório
+   * @param {string} id - ID do laboratório
+   * @returns {Promise} Promise da operação
+   */
+  remover: (id) => api.delete(`/laboratorios/${id}`),
+};
+
+/**
+ * Serviços para operações com blocos de horário
+ */
+export const blocosHorariosService = {
+  /**
+   * Lista todos os blocos de horário
+   * @param {Object} params - Parâmetros de consulta
+   * @returns {Promise} Promise com dados dos blocos de horário
+   */
+  listar: (params = {}) => api.get('/blocos-horario', { params }),
+
+  /**
+   * Cria um novo bloco de horário
+   * @param {Object} data - Dados do bloco de horário
+   * @returns {Promise} Promise com dados do bloco de horário criado
+   */
+  criar: (data) => api.post('/blocos-horario', data),
+
+  /**
+   * Atualiza um bloco de horário
+   * @param {string} id - ID do bloco de horário
+   * @param {Object} data - Dados para atualização
+   * @returns {Promise} Promise com dados do bloco de horário atualizado
+   */
+  atualizar: (id, data) => api.put(`/blocos-horario/${id}`, data),
+
+  /**
+   * Remove um bloco de horário
+   * @param {string} id - ID do bloco de horário
+   * @returns {Promise} Promise da operação
+   */
+  remover: (id) => api.delete(`/blocos-horario/${id}`),
+};
+
 export default api;
