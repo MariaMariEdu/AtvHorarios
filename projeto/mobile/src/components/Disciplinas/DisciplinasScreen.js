@@ -64,7 +64,12 @@ const DisciplinasScreen = () => {
     setLoading(true);
     try {
       const response = await disciplinasService.listar();
-      setDisciplinas(response.data || []);
+      // O backend retorna array direto para compatibilidade com mobile
+      const disciplinasData = Array.isArray(response.data) ? response.data : 
+                            response.data?.disciplinas || 
+                            response.data?.data || 
+                            [];
+      setDisciplinas(disciplinasData);
     } catch (error) {
       console.error('Erro ao carregar disciplinas:', error);
       setDisciplinas([]);
@@ -97,7 +102,12 @@ const DisciplinasScreen = () => {
   const carregarProfessores = async () => {
     try {
       const response = await professoresService.listar();
-      setProfessores(response.data || []);
+      // Trata diferentes estruturas de resposta
+      const professoresData = Array.isArray(response.data) ? response.data : 
+                             response.data?.professores || 
+                             response.data?.data || 
+                             [];
+      setProfessores(professoresData);
     } catch (error) {
       console.error('Erro ao carregar professores:', error);
       setProfessores([]);
@@ -154,16 +164,50 @@ const DisciplinasScreen = () => {
   };
 
   /**
+   * Valida os campos obrigatórios do formulário
+   * @returns {boolean} True se todos os campos obrigatórios estão preenchidos
+   */
+  const validarCampos = () => {
+    if (!formData.nome.trim()) {
+      mostrarSnackbar('O nome da disciplina é obrigatório');
+      return false;
+    }
+    if (!formData.codigo.trim()) {
+      mostrarSnackbar('O código da disciplina é obrigatório');
+      return false;
+    }
+    if (!formData.cargaHoraria || parseInt(formData.cargaHoraria) <= 0) {
+      mostrarSnackbar('A carga horária deve ser maior que 0');
+      return false;
+    }
+    return true;
+  };
+
+  /**
    * Salva a disciplina (criar ou atualizar)
    * @async
    * @function
    */
   const salvarDisciplina = async () => {
+    if (!validarCampos()) {
+      return;
+    }
+
     try {
       const dadosParaEnvio = {
-        ...formData,
-        cargaHoraria: parseInt(formData.cargaHoraria) || 0,
+        nome: formData.nome.trim(),
+        codigo: formData.codigo.trim().toUpperCase(),
+        cargaHoraria: parseInt(formData.cargaHoraria),
+        status: formData.status,
       };
+
+      // Adiciona campos opcionais apenas se preenchidos
+      if (formData.curso) {
+        dadosParaEnvio.curso = formData.curso;
+      }
+      if (formData.professorResponsavel) {
+        dadosParaEnvio.professorResponsavel = formData.professorResponsavel;
+      }
 
       if (editingId) {
         await disciplinasService.atualizar(editingId, dadosParaEnvio);
@@ -179,6 +223,15 @@ const DisciplinasScreen = () => {
       
       if (error.response?.status === 409) {
         message = 'Código da disciplina já existe. Por favor, use um código diferente.';
+      } else if (error.response?.status === 400 && error.response?.data?.details) {
+        // Trata erros de validação do backend
+        const details = error.response.data.details;
+        if (typeof details === 'object') {
+          const firstError = Object.values(details)[0];
+          message = firstError?.message || 'Erro de validação';
+        } else {
+          message = details;
+        }
       } else if (error.response?.data?.message) {
         message = error.response.data.message;
       }
@@ -380,21 +433,28 @@ const DisciplinasScreen = () => {
                 value={formData.nome}
                 onChangeText={(text) => setFormData({ ...formData, nome: text })}
                 mode="outlined"
+                error={!formData.nome.trim()}
+                placeholder="Ex: Programação Orientada a Objetos"
                 style={{ marginBottom: 12 }}
               />
               <TextInput
                 label="Código *"
                 value={formData.codigo}
-                onChangeText={(text) => setFormData({ ...formData, codigo: text })}
+                onChangeText={(text) => setFormData({ ...formData, codigo: text.toUpperCase() })}
                 mode="outlined"
+                error={!formData.codigo.trim()}
+                placeholder="Ex: POO001"
+                autoCapitalize="characters"
                 style={{ marginBottom: 12 }}
               />
               <TextInput
                 label="Carga Horária *"
                 value={formData.cargaHoraria}
-                onChangeText={(text) => setFormData({ ...formData, cargaHoraria: text })}
+                onChangeText={(text) => setFormData({ ...formData, cargaHoraria: text.replace(/[^0-9]/g, '') })}
                 mode="outlined"
+                error={!formData.cargaHoraria || parseInt(formData.cargaHoraria) <= 0}
                 keyboardType="numeric"
+                placeholder="Ex: 60"
                 style={{ marginBottom: 12 }}
               />
               
@@ -495,7 +555,11 @@ const DisciplinasScreen = () => {
           </Dialog.ScrollArea>
           <Dialog.Actions>
             <Button onPress={fecharDialog}>Cancelar</Button>
-            <Button onPress={salvarDisciplina} mode="contained">
+            <Button 
+              onPress={salvarDisciplina} 
+              mode="contained"
+              disabled={!formData.nome.trim() || !formData.codigo.trim() || !formData.cargaHoraria || parseInt(formData.cargaHoraria) <= 0}
+            >
               {editingId ? 'Atualizar' : 'Criar'}
             </Button>
           </Dialog.Actions>

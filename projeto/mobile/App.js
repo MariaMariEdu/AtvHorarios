@@ -10,6 +10,7 @@ import CursosScreen from './src/components/Cursos/CursosScreen';
 import DisciplinasScreen from './src/components/Disciplinas/DisciplinasScreen';
 import LaboratoriosScreen from './src/components/Laboratorios/LaboratoriosScreen';
 import BlocosHorariosScreen from './src/components/BlocosHorarios/BlocosHorariosScreen';
+import AulasScreen from './src/components/Aulas/AulasScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -81,6 +82,16 @@ export default function App() {
               title: 'Blocos Horário',
               tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons name="clock-outline" size={size} color={color} />
+              ),
+            }}
+          />
+          <Tab.Screen 
+            name="Aulas" 
+            component={AulasScreen}
+            options={{
+              title: 'Aulas',
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="calendar-clock" size={size} color={color} />
               ),
             }}
           />
