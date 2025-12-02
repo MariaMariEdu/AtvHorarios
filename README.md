@@ -237,6 +237,7 @@ npm start
 - CRUD completo de Disciplinas com interface mobile otimizada
 - CRUD completo de Laboratórios com interface mobile otimizada
 - CRUD completo de Blocos de Horário com interface mobile otimizada
+- CRUD completo de Aulas com interface mobile otimizada e integração total
 - Cards responsivos para listagem de registros
 - Formulários modais para criação/edição com menus dropdown
 - Filtros em tempo real por nome e outros campos
@@ -246,13 +247,19 @@ npm start
 - Confirmações nativas para exclusões
 - Ícones vetoriais com React Native Vector Icons
 - Gerenciamento de estado local
-- Abas para navegação entre Instituições, Professores, Cursos, Disciplinas, Laboratórios e Blocos de Horário
+- Abas para navegação entre Instituições, Professores, Cursos, Disciplinas, Laboratórios, Blocos de Horário e Aulas
 - Seleção de cursos e professores via menus interativos
 - Seleção de turnos via menu dropdown para blocos de horário
+- Seleção múltipla de blocos de horário para aulas
 - Validação de código/nome único com tratamento de erro 409
 - Tratamento específico de erros 404 para operações PUT/DELETE
 - Formatação de horários no padrão brasileiro (HH:mm)
-- Chips coloridos para identificação visual de turnos
+- Formatação de datas no padrão brasileiro (DD/MM/AAAA)
+- Chips coloridos para identificação visual de turnos e dias da semana
+- Validação de conflitos de horário com mensagens específicas
+- Dropdowns dinâmicos para seleção de entidades relacionadas
+- Campos de data com validação de período
+- Exibição de horários detalhados dos blocos selecionados
 
 ✅ **Modelo de Dados**
 - **Instituições**: Schema Mongoose com validações
@@ -299,16 +306,20 @@ npm start
   - Referências para Curso, Disciplina, Professor, Laboratório e Blocos de Horário
   - Validação de conflitos de horário (laboratório ocupado, professor com choque)
   - Verificação de sobreposição de períodos (dataInicio/dataFim)
-  - CRUD completo implementado no frontend e backend
+  - CRUD completo implementado no frontend, backend e mobile
   - Interface web com filtros avançados por múltiplos campos
+  - Interface mobile com cards responsivos e formulários otimizados
   - Seleção múltipla de blocos de horário com chips visuais
   - Tratamento de conflitos com mensagens específicas (status 409)
   - Formatação de datas no padrão brasileiro
-  - Exibição de horários dos blocos na tabela
+  - Exibição de horários dos blocos na tabela e cards
   - Ordenação por semestre, dia da semana e outros campos
   - Validação de campos obrigatórios e datas válidas
   - População automática de dados relacionados (curso, disciplina, professor, laboratório)
   - Filtros por semestre, curso, disciplina, professor, laboratório e dia da semana
+  - Dropdowns dinâmicos no mobile para seleção de entidades relacionadas
+  - Busca em tempo real por múltiplos campos no mobile
+  - Normalização de dados para exibição legível no mobile
 - Timestamps automáticos (createdAt, updatedAt)
 - Índices para performance
 
@@ -329,7 +340,7 @@ npm start
 - Comentários em português
 - Estrutura de projeto documentada
 - Status do projeto (PROJETO_STATUS.md)
-- Documentação específica de módulos mobile (BLOCOS_HORARIOS_MOBILE.md)
+- Documentação específica de módulos mobile (BLOCOS_HORARIOS_MOBILE.md, AULAS_MOBILE.md)
 
 ✅ **Scripts e Automação**
 - Scripts npm para desenvolvimento (dev) e produção (start)

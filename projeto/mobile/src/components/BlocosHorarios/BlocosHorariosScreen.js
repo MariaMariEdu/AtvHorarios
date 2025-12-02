@@ -69,7 +69,12 @@ const BlocosHorariosScreen = () => {
     setLoading(true);
     try {
       const response = await blocosHorariosService.listar();
-      setBlocosHorarios(response.data?.blocos || []);
+      // O backend retorna array direto
+      const blocosData = Array.isArray(response.data) ? response.data : 
+                        response.data?.blocos || 
+                        response.data?.data || 
+                        [];
+      setBlocosHorarios(blocosData);
     } catch (error) {
       console.error('Erro ao carregar blocos de horário:', error);
       setBlocosHorarios([]);
