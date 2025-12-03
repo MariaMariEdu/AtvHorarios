@@ -86,21 +86,70 @@ const criarAula = async (req, res) => {
 };
 
 /**
- * Listar aulas com filtros
+ * Listar aulas com filtros - Módulo de Consultas de Horários (RF03)
  * @param {Object} req - Request object
+ * @param {Object} req.query - Query parameters
+ * @param {string} [req.query.laboratorio] - ID do laboratório para filtrar
+ * @param {string} [req.query.professor] - ID do professor para filtrar
+ * @param {string} [req.query.curso] - ID do curso para filtrar
+ * @param {string} [req.query.dataInicio] - Data de início no formato YYYY-MM-DD
+ * @param {string} [req.query.dataFim] - Data de fim no formato YYYY-MM-DD
+ * @param {string} [req.query.disciplinaId] - ID da disciplina para filtrar
+ * @param {string} [req.query.semestre] - Semestre para filtrar
+ * @param {string} [req.query.diaSemana] - Dia da semana para filtrar
+ * @param {number} [req.query.page=1] - Página para paginação
+ * @param {number} [req.query.limit=20] - Limite de registros por página
  * @param {Object} res - Response object
  */
 const listarAulas = async (req, res) => {
   try {
-    const { cursoId, professorId, disciplinaId, semestre, diaSemana, page = 1, limit = 20 } = req.query;
+    const { 
+      laboratorio, 
+      professor, 
+      curso, 
+      dataInicio, 
+      dataFim,
+      cursoId, 
+      professorId, 
+      disciplinaId, 
+      semestre, 
+      diaSemana, 
+      page = 1, 
+      limit = 20 
+    } = req.query;
     
+    // Montagem dinâmica dos filtros
     const filtros = {};
-    if (cursoId) filtros.cursoId = cursoId;
-    if (professorId) filtros.professorId = professorId;
+    
+    // Filtros por IDs (suporte aos nomes antigos e novos)
+    if (curso || cursoId) filtros.cursoId = curso || cursoId;
+    if (professor || professorId) filtros.professorId = professor || professorId;
+    if (laboratorio) filtros.laboratorioId = laboratorio;
     if (disciplinaId) filtros.disciplinaId = disciplinaId;
     if (semestre) filtros.semestre = semestre;
     if (diaSemana) filtros.diaSemana = diaSemana;
 
+    // Filtro por intervalo de datas
+    if (dataInicio || dataFim) {
+      filtros.$and = [];
+      
+      if (dataInicio && dataFim) {
+        // Aulas que se sobrepõem ao período especificado
+        filtros.$and.push({
+          $or: [
+            { dataInicio: { $lte: new Date(dataFim) }, dataFim: { $gte: new Date(dataInicio) } }
+          ]
+        });
+      } else if (dataInicio) {
+        // Aulas que terminam após a data de início
+        filtros.$and.push({ dataFim: { $gte: new Date(dataInicio) } });
+      } else if (dataFim) {
+        // Aulas que começam antes da data de fim
+        filtros.$and.push({ dataInicio: { $lte: new Date(dataFim) } });
+      }
+    }
+
+    // Buscar aulas com populates obrigatórios
     const aulas = await Aula.find(filtros)
       .populate('cursoId', 'nome')
       .populate('disciplinaId', 'nome codigo')
