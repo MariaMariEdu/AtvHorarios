@@ -441,7 +441,7 @@ const Disciplinas = () => {
                 label="Professor Responsável"
               >
                 <MenuItem value="">Nenhum</MenuItem>
-                {professores.filter(p => p.ativo).map((professor) => (
+                {professores.filter(p => p.status).map((professor) => (
                   <MenuItem key={professor._id} value={professor._id}>
                     {professor.nome}
                   </MenuItem>
