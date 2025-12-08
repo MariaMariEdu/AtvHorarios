@@ -238,6 +238,7 @@ npm start
 - CRUD completo de Laboratórios com interface mobile otimizada
 - CRUD completo de Blocos de Horário com interface mobile otimizada
 - CRUD completo de Aulas com interface mobile otimizada e integração total
+- Tela de Consultas de Horários com grade visual
 - Cards responsivos para listagem de registros
 - Formulários modais para criação/edição com menus dropdown
 - Filtros em tempo real por nome e outros campos
@@ -260,6 +261,13 @@ npm start
 - Dropdowns dinâmicos para seleção de entidades relacionadas
 - Campos de data com validação de período
 - Exibição de horários detalhados dos blocos selecionados
+- Grade visual de horários por laboratório, curso, disciplina e professor
+- Layout em grade com dias da semana e blocos de horário
+- Cards coloridos para identificação visual de disciplinas
+- Filtros múltiplos para consulta de horários
+- Scroll horizontal e vertical para navegação completa da grade
+- Organização automática de aulas em estrutura de grade
+- Cores diferenciadas para cada disciplina (8 cores)
 
 ✅ **Modelo de Dados**
 - **Instituições**: Schema Mongoose com validações
@@ -340,7 +348,7 @@ npm start
 - Comentários em português
 - Estrutura de projeto documentada
 - Status do projeto (PROJETO_STATUS.md)
-- Documentação específica de módulos mobile (BLOCOS_HORARIOS_MOBILE.md, AULAS_MOBILE.md)
+- Documentação específica de módulos mobile (BLOCOS_HORARIOS_MOBILE.md, AULAS_MOBILE.md, CONSULTAS_MOBILE.md)
 
 ✅ **Scripts e Automação**
 - Scripts npm para desenvolvimento (dev) e produção (start)
