@@ -27,6 +27,7 @@ const disciplinaRoutes = require('./routes/disciplinaRoutes');
 const laboratorioRoutes = require('./routes/laboratorioRoutes');
 const blocoHorarioRoutes = require('./routes/blocoHorarioRoutes');
 const aulaRoutes = require('./routes/aulaRoutes');
+const consultaRoutes = require('./routes/consultaRoutes');
 app.use('/api/v1/instituicoes', instituicoesRoutes);
 app.use('/api/v1/cursos', cursosRoutes);
 app.use('/api/v1/professores', professorRoutes);
@@ -34,6 +35,7 @@ app.use('/api/v1/disciplinas', disciplinaRoutes);
 app.use('/api/v1/laboratorios', laboratorioRoutes);
 app.use('/api/v1/blocos-horario', blocoHorarioRoutes);
 app.use('/api/v1/aulas', aulaRoutes);
+app.use('/api/v1/consultas', consultaRoutes);
 
 // Rota de teste
 app.get('/', (req, res) => {

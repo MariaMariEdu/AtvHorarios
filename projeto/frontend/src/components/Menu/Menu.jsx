@@ -21,6 +21,7 @@ import {
   Science as ScienceIcon,
   Schedule as ScheduleIcon,
   Class as ClassIcon,
+  Search as SearchIcon,
   Close as CloseIcon,
 } from '@mui/icons-material';
 import Instituicoes from '../Instituicoes/Instituicoes';
@@ -30,6 +31,7 @@ import Disciplinas from '../Disciplinas/Disciplinas';
 import Laboratorios from '../Laboratorios/Laboratorios';
 import BlocosHorario from '../BlocosHorario/BlocosHorario';
 import Aulas from '../Aulas/Aulas';
+import Consultas from '../Consultas/Consultas';
 
 const Menu = ({ open, onClose }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -101,6 +103,14 @@ const Menu = ({ open, onClose }) => {
     handleOpenModal('Gerenciar Aulas', <Aulas />);
   };
 
+  /**
+   * Manipula o clique no menu de Consultas
+   * Abre o modal com o componente de consultas de horários
+   */
+  const handleConsultasClick = () => {
+    handleOpenModal('Consultas de Horários', <Consultas />);
+  };
+
   return (
     <>
       <Drawer anchor="left" open={open} onClose={onClose}>
@@ -166,6 +176,14 @@ const Menu = ({ open, onClose }) => {
                   <ClassIcon />
                 </ListItemIcon>
                 <ListItemText primary="Aulas" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton onClick={handleConsultasClick}>
+                <ListItemIcon>
+                  <SearchIcon />
+                </ListItemIcon>
+                <ListItemText primary="Consultas" />
               </ListItemButton>
             </ListItem>
           </List>
